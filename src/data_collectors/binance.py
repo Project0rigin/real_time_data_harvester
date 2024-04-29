@@ -1,26 +1,20 @@
 import logging
 import requests
+import websocket
+import json
+import time
 
-class BinanceCollector:
-    def __init__(self, base_url, api_key, symbol, symbol_price_ticker_endpoint_binance):
+#TODO build on websocket logic
+class Binance:
+    def __init__(self, base_url, api_key):
         self.base_url = base_url
         self.api_key = api_key
-        self.symbol = symbol
-        self.symbol_price_ticker_endpoint = symbol_price_ticker_endpoint_binance
 
-    def get_ticker_price(self):
-        # Get the latest price of a symbol
-        logging.info(f"Retrieving current price for {self.symbol}")
-        try:
-            response = requests.get(
-                f"{self.base_url}{self.symbol_price_ticker_endpoint}?symbol={self.symbol}",
-                headers={"X-MBX-APIKEY": self.api_key},
-            )
-            response.raise_for_status()
-            price = response.json()["price"]
-            logging.info(f"Current price for {self.symbol}: {price}")
-
-            return price
-        except requests.RequestException as e:
-            logging.error(f"Could not retrieve current price for {self.symbol}: {str(e)}")
-            return None
+    async def listen_for_trades(self, ws_url):
+        # Set up websocket connection
+        ws = websocket.WebSocketApp(ws_url,
+                                    on_open=self.on_open,
+                                    on_message=self.on_message,
+                                    on_error=self.on_error,
+                                    on_close=self.on_close)
+        ws.run_forever()
