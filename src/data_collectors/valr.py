@@ -1,7 +1,7 @@
 import logging
 import requests
 
-class BinanceCollector:
+class ValrCollector:
     def __init__(self, base_url, api_key, symbol, symbol_price_ticker_endpoint_binance):
         self.base_url = base_url
         self.api_key = api_key
