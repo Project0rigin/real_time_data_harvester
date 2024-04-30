@@ -1,20 +1,17 @@
-import logging
-import requests
-import websocket
-import json
-import time
+import websockets
+import asyncio
 
 #TODO build on websocket logic
 class Binance:
-    def __init__(self, base_url, api_key):
+    def __init__(self, base_url, api_key, asset_pairs):
         self.base_url = base_url
         self.api_key = api_key
+        self.asset_pairs = asset_pairs
 
     async def listen_for_trades(self, ws_url):
-        # Set up websocket connection
-        ws = websocket.WebSocketApp(ws_url,
-                                    on_open=self.on_open,
-                                    on_message=self.on_message,
-                                    on_error=self.on_error,
-                                    on_close=self.on_close)
-        ws.run_forever()
+        async with websockets.connect(f"{ws_url}{self.asset_pairs[0]}@trade") as websocket:
+            while True:
+                message = await websocket.recv()
+                print("Received message:", message)
+
+# /{self.asset_pairs[1]}@trade

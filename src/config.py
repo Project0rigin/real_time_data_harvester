@@ -1,14 +1,16 @@
 # Symbols
-COIN_1 = "BTCUSDT"
-COIN_2 = "ETHUSDT"
-COIN_3 = "BNBUSDT"
-COIN_4 = "ADAUSDT"
-COIN_5 = "XRPUSDT"
-COIN_6 = "DOGEUSDT"
-COIN_7 = "DOTUSDT"
-COIN_8 = "UNIUSDT"
-COIN_9 = "LINKUSDT"
-COIN_10 = "LTCUSDT"
+COIN_1 = "btcusdt"
+COIN_2 = "ethusdt"
+COIN_3 = "bnbusdt"
+COIN_4 = "adausdt"
+COIN_5 = "xrpusdt"
+COIN_6 = "dogeusdt"
+COIN_7 = "dotusdt"
+COIN_8 = "uniusdt"
+COIN_9 = "linkusdt"
+COIN_10 = "ltcusdt"
+
+COINS = [COIN_1, COIN_2, COIN_3, COIN_4, COIN_5, COIN_6, COIN_7, COIN_8, COIN_9, COIN_10]
 
 # Binance Base API settings
 BASE_URL = "https://api.binance.com"
