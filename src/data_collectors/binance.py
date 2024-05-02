@@ -2,6 +2,7 @@ import websockets
 import asyncio
 import requests
 import json
+from src.utils import trade_name_concat
 
 #TODO build on websocket logic
 class Binance:
@@ -12,7 +13,7 @@ class Binance:
         self.last_message = {}
 
     async def listen_for_trades(self, ws_url):
-        async with websockets.connect(f"{ws_url}{self.asset_pairs[0]}@trade") as websocket:
+        async with websockets.connect(f"{ws_url}{trade_name_concat(self.asset_pairs)}") as websocket:
             while True:
                 message = await websocket.recv()
                 self.last_message = json.loads(message)
