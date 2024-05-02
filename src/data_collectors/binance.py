@@ -13,15 +13,10 @@ class Binance:
 
     async def listen_for_trades(self, ws_url):
         async with websockets.connect(f"{ws_url}{self.asset_pairs[0]}@trade") as websocket:
-            last_time = None
             while True:
                 message = await websocket.recv()
-                current_time = asyncio.get_running_loop().time()
-                if last_time is None or current_time - last_time >= 10:
-                    self.last_message = json.loads(message)
-                    print("Received message:", message)
-                    last_time = current_time
-                await asyncio.sleep(1)
+                self.last_message = json.loads(message)
+                print("Received message:", message)
 
     def get_current_price(self, symbol_price_ticker_endpoint):
         print(f"Retrieving current price for {self.asset_pairs[0]}")
