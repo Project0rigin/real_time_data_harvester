@@ -9,6 +9,7 @@ class Binance:
     def __init__(self, base_url, api_key, api_secret, asset_pairs):
         self.base_url = base_url
         self.api_key = api_key
+        self.api_secret = api_secret
         self.asset_pairs = asset_pairs
         self.last_message = {pair: None for pair in asset_pairs}
 
