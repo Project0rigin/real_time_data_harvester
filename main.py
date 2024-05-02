@@ -1,5 +1,7 @@
 # src/main.py
 import asyncio
+from fastapi import FastAPI
+import uvicorn
 from src.data_collectors.binance import Binance
 # from src.data_collectors.coinbase import Coinbase
 # from src.data_collectors.valr import Valr
@@ -19,9 +21,10 @@ asset_pairs = COINS
 symbol_price_ticker_endpoint = SYMBOL_PRICE_TICKER_URL_ENDPOINT__MARKETDATA
 base_url = BASE_URL
 
+binance = Binance(base_url, binance_api_key, binance_api_secret, asset_pairs)
+
 async def main():
     # Initialize exchange objects
-    binance = Binance(base_url, binance_api_key, binance_api_secret, asset_pairs)
     binance.get_current_price(symbol_price_ticker_endpoint)
     # coinbase = Coinbase()
     # valr = Valr()
