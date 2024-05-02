@@ -17,18 +17,3 @@ class Binance:
                 message = await websocket.recv()
                 self.last_message = json.loads(message)
                 print("Received message:", message)
-
-    def get_current_price(self, symbol_price_ticker_endpoint):
-        print(f"Retrieving current price for {self.asset_pairs[0]}")
-        try:
-            response = requests.get(
-                f"{self.base_url}{symbol_price_ticker_endpoint}?symbol={self.asset_pairs[0].upper()}",
-                headers={"X-MBX-APIKEY": self.api_key},
-            )
-            response.raise_for_status()
-            price = response.json()["price"]
-            print(f"Current price for {self.asset_pairs[0]}: {price}")
-            return price
-        except requests.RequestException as e:
-            print(f"Error retrieving current price for {self.asset_pairs[0]}: {str(e)}")
-            return None
