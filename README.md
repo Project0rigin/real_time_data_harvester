@@ -25,7 +25,7 @@ The primary goal of the Real-Time Data Harvester is to efficiently collect and d
 
 ## Background
 
-The Real-Time Data Harvester is specifically designed to meet these critical needs by focusing on the high-speed collection of relevant financial data across multiple cryptocurrency exchanges. By integrating real-time data processing and network communication, this tool ensures that traders have the most current information at their fingertips. 
+The Real-Time Data Harvester is specifically designed to meet these critical needs by focusing on the high-speed collection of relevant financial data across multiple cryptocurrency exchanges. By integrating real-time data processing and network communication, this tool ensures that traders have the most current information at their fingertips.
 
 ## Installation
 
@@ -69,6 +69,7 @@ To start the scanner, run the following command from the root of the project:
 
 ```bash
 python main.py
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 ## Architecture

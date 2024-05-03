@@ -12,7 +12,7 @@ class Binance(AssetPairs):
         self.api_key = api_key
         self.api_secret = api_secret
         self.asset_pairs = asset_pairs
-        self.last_message = {pair: None for pair in asset_pairs}
+        self.last_message = {pair: {'buy': None, 'sell': None} for pair in self.asset_pairs}
 
     async def listen_for_trades(self, ws_url):
         async with websockets.connect(f"{ws_url}{concat_trade_name(self.asset_pairs)}") as websocket:
@@ -23,7 +23,12 @@ class Binance(AssetPairs):
                 if 'stream' in data:
                     asset_pair = data['stream'].split('@')[0]
                     price = data['data']['p'] if 'p' in data['data'] else None
+                    is_buyer_maker = data['data'].get('m', None)
                     if asset_pair in self.last_message:
-                        self.last_message[asset_pair] = price
+                        if is_buyer_maker is not None:
+                            if not is_buyer_maker:  # Buyer is taker, it's a buy
+                                self.last_message[asset_pair]['buy'] = price
+                            else:  # Buyer is maker, it's a sell
+                                self.last_message[asset_pair]['sell'] = price
                     else:
                         print(f"Received message for unknown asset pair: {asset_pair}")
