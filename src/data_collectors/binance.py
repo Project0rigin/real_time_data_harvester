@@ -3,9 +3,10 @@ import asyncio
 import requests
 import json
 from src.utils.trade_name_concat import concat_trade_name
+from src.data_collectors.asset_pairs import AssetPairs
 
 #TODO build on websocket logic
-class Binance:
+class Binance(AssetPairs):
     def __init__(self, base_url, api_key, api_secret, asset_pairs):
         self.base_url = base_url
         self.api_key = api_key
