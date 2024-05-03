@@ -22,7 +22,7 @@ class AssetPairs:
             second_third = asset_pairs[end1:end2]
             third_third = asset_pairs[end2:]
             print(f"First third: {first_third}")
-            return [first_third, second_third, third_third]
+            return [asset_pairs, first_third, second_third, third_third]
         except requests.RequestException as e:
             print(f"Failed to retrieve pairs: {e}")
             return []

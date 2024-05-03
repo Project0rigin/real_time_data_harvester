@@ -6,6 +6,7 @@ from src.data_collectors.asset_pairs import AssetPairs
 from src.config import BINANCE_WEBSOCKET_URI, COINS, SYMBOL_PRICE_TICKER_URL_ENDPOINT__MARKETDATA, BASE_URL, EXCHANGE_INFO_URL
 from dotenv import load_dotenv
 import os
+import uvicorn
 
 load_dotenv()
 
@@ -25,12 +26,15 @@ async def get_latest_trades():
     return {"data": binance.last_message} if binance.last_message else {"error": "No data available"}
 
 async def start_binance_listener():
-    await binance.listen_for_trades(BINANCE_WEBSOCKET_URI)
+    tasks = []
+    for index in range(3):
+        task = asyncio.create_task(binance.listen_for_trades(BINANCE_WEBSOCKET_URI, index + 1))
+        tasks.append(task)
+    await asyncio.gather(*tasks)
 
 @app.on_event("startup")
 async def startup_event():
     asyncio.create_task(start_binance_listener())
 
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

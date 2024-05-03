@@ -14,10 +14,10 @@ class Binance(AssetPairs):
         self.api_key = api_key
         self.api_secret = api_secret
         self.asset_pairs = asset_pairs
-        self.last_message = {pair: {'buy': None, 'sell': None} for pair in self.asset_pairs}
+        self.last_message = {pair: {'buy': None, 'sell': None} for pair in self.pairs[0]}
 
-    async def listen_for_trades(self, ws_url):
-        async with websockets.connect(f"{ws_url}{concat_trade_name(self.pairs[0])}") as websocket:
+    async def listen_for_trades(self, ws_url, stream_index):
+        async with websockets.connect(f"{ws_url}{concat_trade_name(self.pairs[stream_index])}") as websocket:
             while True:
                 message = await websocket.recv()
                 data = json.loads(message)
