@@ -4,7 +4,6 @@ import requests
 import json
 from src.utils.trade_name_concat import concat_trade_name
 from src.data_collectors.asset_pairs import AssetPairs
-from src.config import EXCHANGE_INFO_URL
 
 #TODO build on websocket logic
 class Binance(AssetPairs):

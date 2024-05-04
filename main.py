@@ -42,8 +42,11 @@ async def start_valr_listener():
     return task
 
 async def start_coinbase_listener():
-    task = asyncio.create_task(coinbase.listen_for_trades(COINBASE_WEBSOCKET_URI, 0))
-    return task
+    tasks = []
+    for index in range(3):
+        task = asyncio.create_task(coinbase.listen_for_trades(COINBASE_WEBSOCKET_URI, index + 1))
+        task.append(task)
+    return asyncio.gather(*tasks)
 
 @app.on_event("startup")
 async def startup_event():

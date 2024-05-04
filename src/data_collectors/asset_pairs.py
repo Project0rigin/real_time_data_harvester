@@ -29,12 +29,21 @@ class AssetPairs:
 
     def _get_pairs_coinbase(self):
         try:
-            url = COINBASE_PRODUCTS_URL_ENDPOINT
-            response = requests.get(url)
+            response = requests.get(COINBASE_PRODUCTS_URL_ENDPOINT)
             products = response.json()
             asset_pairs = []
             for product in products:
                 asset_pairs.append(product['id'])
+            part_size = len(asset_pairs) // 3
+            remainder = len(asset_pairs) % 3
+            end1 = part_size + (1 if remainder > 0 else 0)
+            end2 = end1 + part_size + (1 if remainder > 1 else 0)
+
+            first_third = asset_pairs[:end1]
+            second_third = asset_pairs[end1:end2]
+            third_third = asset_pairs[end2:]
+            print(asset_pairs)
+            return [asset_pairs, first_third, second_third, third_third]
         except requests.RequestException as e:
             print("Failed to fetch products", response.status_code)
             return []

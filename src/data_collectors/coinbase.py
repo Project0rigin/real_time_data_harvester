@@ -19,7 +19,7 @@ class Coinbase(AssetPairs):
         # Prepare the subscription message according to Coinbase API specifications
             subscribe_message = {
                 "type": "subscribe",
-                "product_ids": ["ETH-USD", "BTC-USD"],
+                "product_ids": self.coinbase_pairs[stream_index],
                 "channels": ["ticker"]
             }
 
