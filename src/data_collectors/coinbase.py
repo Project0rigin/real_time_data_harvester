@@ -30,5 +30,16 @@ class Coinbase(AssetPairs):
             # Listen for incoming ticker messages
             while True:
                 message = await websocket.recv()
-                message = json.loads(message)
+                data = json.loads(message)
                 print("Received ticker message:", message)
+                if 'type' in data:
+                    asset_pair = data['product_id'].replace('-', '').lower()
+                    price = data['price']
+                    side = data.get('side', None)
+                    if asset_pair in self.last_message:
+                        if side == 'buy':
+                            self.last_message[asset_pair]['buy'] = price
+                        elif side == 'sell':
+                            self.last_message[asset_pair]['sell'] = price
+                    else:
+                        print(f"Received message for unknown asset pair: {asset_pair}")
