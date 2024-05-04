@@ -4,6 +4,10 @@ import requests
 import json
 from src.utils.coinbase_pair_formatter import coinbase_pair_format
 from src.data_collectors.asset_pairs import AssetPairs
+from colorama import init, Fore, Back, Style
+
+# Initializing Colorama
+init(autoreset=True)
 
 #TODO build on websocket logic
 class Coinbase(AssetPairs):
@@ -31,7 +35,7 @@ class Coinbase(AssetPairs):
             while True:
                 message = await websocket.recv()
                 data = json.loads(message)
-                print("Received ticker message:", message)
+                print(Fore.BLUE + "Coinbase Market:", message)
                 if 'product_id' in data:
                     asset_pair = data['product_id'].replace('-', '').lower()
                     price = data['price']

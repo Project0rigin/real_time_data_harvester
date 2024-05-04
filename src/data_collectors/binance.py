@@ -4,6 +4,10 @@ import requests
 import json
 from src.utils.trade_name_concat import concat_trade_name
 from src.data_collectors.asset_pairs import AssetPairs
+from colorama import init, Fore, Back, Style
+
+# Initializing Colorama
+init(autoreset=True)
 
 #TODO build on websocket logic
 class Binance(AssetPairs):
@@ -19,7 +23,7 @@ class Binance(AssetPairs):
             while True:
                 message = await websocket.recv()
                 data = json.loads(message)
-                print("Received message:", message)
+                print(Fore.YELLOW + "Binance Market:", message)
                 if 'stream' in data:
                     asset_pair = data['stream'].split('@')[0]
                     price = data['data']['p'] if 'p' in data['data'] else None

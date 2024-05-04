@@ -1,6 +1,7 @@
 import requests
 from src.config import EXCHANGE_INFO_URL, COINBASE_PRODUCTS_URL_ENDPOINT
 from src.utils.coinbase_pair_formatter import remove_tickers
+
 class AssetPairs:
     def __init__(self):
         self.pairs = self._get_pairs()
