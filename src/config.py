@@ -73,3 +73,6 @@ SYMBOL_PRICE_TICKER_URL_ENDPOINT__MARKETDATA = "/api/v3/ticker/price"
 # Binance Websocket API settings
 BINANCE_WEBSOCKET_URI = "wss://stream.binance.com:9443/stream?streams="
 WS_TICKER_URL_ENDPOINT = "/btcusdt@ticker"
+
+# Coinbase Base API settings
+COINBASE_WEBSOCKET_URI = "wss://ws-feed.exchange.coinbase.com"

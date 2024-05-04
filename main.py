@@ -2,7 +2,6 @@
 import asyncio
 from fastapi import FastAPI
 from src.data_collectors.binance import Binance
-from src.data_collectors.asset_pairs import AssetPairs
 from src.config import BINANCE_WEBSOCKET_URI, COINS, SYMBOL_PRICE_TICKER_URL_ENDPOINT__MARKETDATA, BASE_URL, EXCHANGE_INFO_URL
 from dotenv import load_dotenv
 import os
@@ -14,12 +13,10 @@ app = FastAPI()
 
 binance_api_key = os.getenv("BINANCE_API_KEY")
 binance_api_secret = os.getenv("BINANCE_API_SECRET")
-asset_pairs = COINS
 symbol_price_ticker_endpoint = SYMBOL_PRICE_TICKER_URL_ENDPOINT__MARKETDATA
 base_url = BASE_URL
 
-# asset_pair_collector = AssetPairs(EXCHANGE_INFO_URL)
-binance = Binance(base_url, binance_api_key, binance_api_secret, asset_pairs)
+binance = Binance(base_url, binance_api_key, binance_api_secret)
 
 @app.get("/latest_trades")
 async def get_latest_trades():
