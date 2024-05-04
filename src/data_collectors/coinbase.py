@@ -32,7 +32,7 @@ class Coinbase(AssetPairs):
                 message = await websocket.recv()
                 data = json.loads(message)
                 print("Received ticker message:", message)
-                if 'type' in data:
+                if 'product_id' in data:
                     asset_pair = data['product_id'].replace('-', '').lower()
                     price = data['price']
                     side = data.get('side', None)
