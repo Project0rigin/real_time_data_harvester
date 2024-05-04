@@ -32,9 +32,19 @@ async def start_binance_listener():
         tasks.append(task)
     await asyncio.gather(*tasks)
 
+async def start_valr_listener():
+    task = ... # asyncio.create_task(valr.listen_for_trades(VALR_WEBSOCKET_URI, 0))
+    return task
+
+async def start_coinbase_listener():
+    task = ... # asyncio.create_task(coinbase.listen_for_trades(COINBASE_WEBSOCKET_URI, 0))
+    return task
+
 @app.on_event("startup")
 async def startup_event():
     asyncio.create_task(start_binance_listener())
+    asyncio.create_task(start_valr_listener())
+    asyncio.create_task(start_coinbase_listener())
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
