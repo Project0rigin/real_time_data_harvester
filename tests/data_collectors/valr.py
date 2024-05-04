@@ -1,26 +1,50 @@
-import logging
-import requests
+# testing the valr api with websockets
+import asyncio
+import websockets
+import json
+import hmac
+import hashlib
+import time
 
-class ValrCollector:
-    def __init__(self, base_url, api_key, symbol, symbol_price_ticker_endpoint_binance):
-        self.base_url = base_url
-        self.api_key = api_key
-        self.symbol = symbol
-        self.symbol_price_ticker_endpoint = symbol_price_ticker_endpoint_binance
+api_key = ''
+api_secret = ''
 
-    def get_ticker_price(self):
-        # Get the latest price of a symbol
-        logging.info(f"Retrieving current price for {self.symbol}")
+def get_auth_headers():
+    timestamp = str(int(time.time() * 1000))
+    method = 'GET'
+    path = '/ws/trade'
+    body = ''
+
+    # Create the prehash string
+    prehash = timestamp + method.upper() + path + body
+    # Create the HMAC SHA512 signature
+    signature = hmac.new(bytes(api_secret, 'utf-8'), bytes(prehash, 'utf-8'), hashlib.sha512).hexdigest()
+
+    return {
+        'X-VALR-API-KEY': api_key,
+        'X-VALR-SIGNATURE': signature,
+        'X-VALR-TIMESTAMP': timestamp
+    }
+
+async def connect_to_valr():
+    url = "wss://api.valr.com/ws/trade"
+    headers = get_auth_headers()
+
+    async with websockets.connect(url, extra_headers=headers) as websocket:
+        # Subscribe to the NEW_TRADE stream
+        subscribe_message = {
+            "type": "SUBSCRIBE",
+            "subscriptions": [{"event": "NEW_TRADE", "pairs": ["BTCUSDT"]}]
+        }
+        await websocket.send(json.dumps(subscribe_message))
+
         try:
-            response = requests.get(
-                f"{self.base_url}{self.symbol_price_ticker_endpoint}?symbol={self.symbol}",
-                headers={"X-MBX-APIKEY": self.api_key},
-            )
-            response.raise_for_status()
-            price = response.json()["price"]
-            logging.info(f"Current price for {self.symbol}: {price}")
+            while True:
+                message = await websocket.recv()
+                print("Received message:", message)
+        except websockets.exceptions.ConnectionClosed:
+            print("Connection closed, attempting to reconnect")
+            await connect_to_valr()  # Reconnect
 
-            return price
-        except requests.RequestException as e:
-            logging.error(f"Could not retrieve current price for {self.symbol}: {str(e)}")
-            return None
+# Run the connection in an asyncio event loop
+asyncio.run(connect_to_valr())

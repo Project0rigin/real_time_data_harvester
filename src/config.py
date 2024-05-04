@@ -1,3 +1,7 @@
+
+# Binance Base API settings
+BASE_URL = "https://api.binance.com"
+
 # Symbols
 EXCHANGE_INFO_URL = "https://api.binance.com/api/v3/exchangeInfo"
 
@@ -58,8 +62,7 @@ COIN_DICT = {
 
 COINS = list(COIN_DICT.values())
 
-# Binance Base API settings
-BASE_URL = "https://api.binance.com"
+
 
 # Binance Market Data API settings
 CHECK_SERVER_TIME_URL_ENDPOINT__MARKETDATA = "/api/v3/time"
