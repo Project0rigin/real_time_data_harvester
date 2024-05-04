@@ -1,5 +1,5 @@
 
-# Binance Base API settings
+# ----Binance Base API settings----
 BASE_URL = "https://api.binance.com"
 
 # Symbols
@@ -62,8 +62,6 @@ COIN_DICT = {
 
 COINS = list(COIN_DICT.values())
 
-
-
 # Binance Market Data API settings
 CHECK_SERVER_TIME_URL_ENDPOINT__MARKETDATA = "/api/v3/time"
 EXCHANGE_INFO_URL_ENDPOINT__MARKETDATA = "/api/v3/exchangeInfo"
@@ -74,5 +72,10 @@ SYMBOL_PRICE_TICKER_URL_ENDPOINT__MARKETDATA = "/api/v3/ticker/price"
 BINANCE_WEBSOCKET_URI = "wss://stream.binance.com:9443/stream?streams="
 WS_TICKER_URL_ENDPOINT = "/btcusdt@ticker"
 
-# Coinbase Base API settings
+# ----Coinbase Base API settings----
+
+# Websocket
 COINBASE_WEBSOCKET_URI = "wss://ws-feed.exchange.coinbase.com"
+
+# Get Request
+COINBASE_PRODUCTS_URL_ENDPOINT = "https://api.pro.coinbase.com/products"
