@@ -4,6 +4,7 @@ from src.config import EXCHANGE_INFO_URL, COINBASE_PRODUCTS_URL_ENDPOINT
 class AssetPairs:
     def __init__(self):
         self.pairs = self._get_pairs()
+        self.coinbase_pairs = self._get_pairs_coinbase()
 
     def _get_pairs(self):
         try:
@@ -21,18 +22,19 @@ class AssetPairs:
             first_third = asset_pairs[:end1]
             second_third = asset_pairs[end1:end2]
             third_third = asset_pairs[end2:]
-            print(f"First third: {first_third}")
             return [asset_pairs, first_third, second_third, third_third]
         except requests.RequestException as e:
             print(f"Failed to retrieve pairs: {e}")
             return []
 
     def _get_pairs_coinbase(self):
-        url = COINBASE_PRODUCTS_URL_ENDPOINT
-        response = requests.get(url)
-        if response.status_code == 200:
+        try:
+            url = COINBASE_PRODUCTS_URL_ENDPOINT
+            response = requests.get(url)
             products = response.json()
+            asset_pairs = []
             for product in products:
-                print(f"ID: {product['id']}, Base: {product['base_currency']}, Quote: {product['quote_currency']}")
-        else:
+                asset_pairs.append(product['id'])
+        except requests.RequestException as e:
             print("Failed to fetch products", response.status_code)
+            return []

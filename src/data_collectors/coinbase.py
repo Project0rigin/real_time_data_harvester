@@ -4,12 +4,11 @@ import requests
 import json
 from src.utils.trade_name_concat import concat_trade_name
 from src.data_collectors.asset_pairs import AssetPairs
-from src.config import EXCHANGE_INFO_URL
 
 #TODO build on websocket logic
 class Coinbase(AssetPairs):
     def __init__(self, base_url, api_key, api_secret):
-        super().__init__(EXCHANGE_INFO_URL)
+        super().__init__()
         self.base_url = base_url
         self.api_key = api_key
         self.api_secret = api_secret

@@ -9,7 +9,7 @@ from src.config import EXCHANGE_INFO_URL
 #TODO build on websocket logic
 class Binance(AssetPairs):
     def __init__(self, base_url, api_key, api_secret):
-        super().__init__(EXCHANGE_INFO_URL)
+        super().__init__()
         self.base_url = base_url
         self.api_key = api_key
         self.api_secret = api_secret
