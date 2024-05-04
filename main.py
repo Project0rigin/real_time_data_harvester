@@ -24,7 +24,7 @@ coinbase = Coinbase(base_url, binance_api_key, binance_api_secret)
 async def get_latest_trades():
     if binance.last_message:
         return {
-            "connected": True,
+            "connected": binance.connected and coinbase.connected,
             "binance": {"prices": binance.last_message},
             "coinbase": {"prices": coinbase.last_message}
             }
