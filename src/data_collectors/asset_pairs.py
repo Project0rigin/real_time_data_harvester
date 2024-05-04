@@ -1,11 +1,17 @@
 import requests
 from src.config import EXCHANGE_INFO_URL, COINBASE_PRODUCTS_URL_ENDPOINT
-from src.utils.coinbase_pair_formatter import remove_tickers
+from src.utils.coinbase_pair_formatter import remove_tickers, coinbase_pair_format
 
 class AssetPairs:
     def __init__(self):
         self.pairs = self._get_pairs()
         self.coinbase_pairs = self._get_pairs_coinbase()
+
+    def shared_pairs_binance_coinbase(self):
+        set_binance_pairs = set(self.pairs[0])
+        set_coinbase_pairs = set(coinbase_pair_format(self.coinbase_pairs[0]))
+        common_pairs = set_binance_pairs.intersection(set_coinbase_pairs)
+        return list(common_pairs)
 
     def _get_pairs(self):
         try:

@@ -16,8 +16,10 @@ class Binance(AssetPairs):
         self.base_url = base_url
         self.api_key = api_key
         self.api_secret = api_secret
-        self.last_message = {pair: {'buy': None, 'sell': None} for pair in self.pairs[0]}
+        self.coin_pairs = self.pairs[0]
+        self.last_message = {pair: {'buy': None, 'sell': None} for pair in self.coin_pairs}
         self.connected = False
+        self.shared_with_coinbase = self.shared_pairs_binance_coinbase()
 
     async def listen_for_trades(self, ws_url, stream_index):
         while True:

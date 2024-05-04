@@ -25,8 +25,11 @@ async def get_latest_trades():
     if binance.last_message:
         return {
             "connected": binance.connected and coinbase.connected,
-            "binance": {"prices": binance.last_message},
-            "coinbase": {"prices": coinbase.last_message}
+            "binance": {"prices": binance.last_message,
+                        "shared_coinbase": binance.shared_with_coinbase
+                        },
+            "coinbase": {"prices": coinbase.last_message,
+                        "shared_binance": coinbase.shared_with_binance},
             }
     else:
         return {"error": "No data available"}

@@ -16,8 +16,10 @@ class Coinbase(AssetPairs):
         self.base_url = base_url
         self.api_key = api_key
         self.api_secret = api_secret
-        self.last_message = {pair: {'buy': None, 'sell': None} for pair in coinbase_pair_format(self.coinbase_pairs[0])}
+        self.coin_pairs = coinbase_pair_format(self.coinbase_pairs[0])
+        self.last_message = {pair: {'buy': None, 'sell': None} for pair in self.coin_pairs}
         self.connected = False
+        self.shared_with_binance = self.shared_pairs_binance_coinbase()
 
     async def listen_for_trades(self, ws_url, stream_index):
         while True:
