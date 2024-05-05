@@ -54,7 +54,7 @@ async def start_binance_listener():
 async def start_kraken_listener():
     tasks = []
     for index in range(3):
-        task = asyncio.create_task(kraken.listen_for_trades(KRAKEN_WEBSOCKET_URI, index))
+        task = asyncio.create_task(kraken.listen_for_trades(KRAKEN_WEBSOCKET_URI, index + 1))
         tasks.append(task)
     return asyncio.gather(*tasks)
 
