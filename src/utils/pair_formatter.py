@@ -10,3 +10,5 @@ def remove_tickers(pairs_array):
 # array = ["BTC-USD", "ETH-USD", "LTC-USD", "ANKR-USD", "XRP-USD"]
 # tickers = ["ANKR-USD", "XRP-USD"]
 # print(remove_tickers(array, tickers))
+def convert_kraken_pair(pairs_array):
+    return [pair.replace('/', '').lower() for pair in pairs_array]

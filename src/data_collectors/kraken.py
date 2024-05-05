@@ -3,6 +3,7 @@ import asyncio
 import requests
 import json
 from src.data_collectors.asset_pairs import AssetPairs
+from src.utils.pair_formatter import convert_kraken_pair
 from colorama import init, Fore, Back, Style
 
 # Initializing Colorama
@@ -14,8 +15,8 @@ class Kraken(AssetPairs):
         self.base_url = base_url
         self.api_key = api_key
         self.api_secret = api_secret
-        self.coin_pairs = ["XBT/USD"] #todo change to kraken
-        self.last_message = {"XBT/USD": {'buy': None, 'sell': None}} #todo change to kraken
+        self.coin_pairs = convert_kraken_pair(self.kraken_pairs[0])
+        self.last_message = {pair: {'buy': None, 'sell': None} for pair in self.coin_pairs}
         self.connected = False
 
     async def listen_for_trades(self, ws_url, stream_index):
@@ -24,9 +25,7 @@ class Kraken(AssetPairs):
                 async with websockets.connect(ws_url) as websocket:
                     subscribe_message = {
                         "event": "subscribe",
-                        "pair": [
-                            self.coin_pairs[stream_index]
-                        ],
+                        "pair": self.kraken_pairs[stream_index],
                         "subscription": {
                             "name": "trade"
                         }
@@ -43,7 +42,7 @@ class Kraken(AssetPairs):
                         data = json.loads(message)
                         if 'trade' in data:
                             print(Fore.GREEN + "Kraken Market:", message)
-                            asset_pair = data[-1]
+                            asset_pair = data[-1].replace('/', '').lower()
                             trades = data[1]
                             for trade in trades:
                                 price = trade[0]

@@ -168,3 +168,6 @@ UNSUPPORTED_TICKERS = [
 
 # Websocket
 KRAKEN_WEBSOCKET_URI = "wss://ws.kraken.com"
+
+# Get Request
+KRAKEN_PRODUCTS_URL_ENDPOINT = "https://api.kraken.com/0/public/AssetPairs"

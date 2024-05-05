@@ -1,12 +1,12 @@
 import requests
-from src.config import EXCHANGE_INFO_URL, COINBASE_PRODUCTS_URL_ENDPOINT
-from src.utils.coinbase_pair_formatter import remove_tickers, coinbase_pair_format
+from src.config import EXCHANGE_INFO_URL, COINBASE_PRODUCTS_URL_ENDPOINT, KRAKEN_PRODUCTS_URL_ENDPOINT
+from src.utils.pair_formatter import remove_tickers, coinbase_pair_format
 
 class AssetPairs:
     def __init__(self):
         self.pairs = self._get_pairs()
         self.coinbase_pairs = self._get_pairs_coinbase()
-        #todo add kraken
+        self.kraken_pairs = self._get_pairs_kraken()
 
     def shared_pairs_binance_coinbase(self):
         set_binance_pairs = set(self.pairs[0])
@@ -32,7 +32,7 @@ class AssetPairs:
             third_third = asset_pairs[end2:]
             return [asset_pairs, first_third, second_third, third_third]
         except requests.RequestException as e:
-            print(f"Failed to retrieve pairs: {e}")
+            print(f"Failed to fetch binance pairs: {e}")
             return []
 
     def _get_pairs_coinbase(self):
@@ -54,5 +54,28 @@ class AssetPairs:
             # print(filtered_asset_pairs)
             return [filtered_asset_pairs, first_third, second_third, third_third]
         except requests.RequestException as e:
-            print("Failed to fetch products", response.status_code)
+            print(f"Failed to fetch coinbase pairs: {e}")
+            return []
+
+    def _get_pairs_kraken(self):
+        try:
+            response = requests.get(KRAKEN_PRODUCTS_URL_ENDPOINT)
+            data = response.json()
+            asset_pairs = []
+            if not data['error']:
+                products = data['result']
+                for key, value in products.items():
+                    asset_pairs.append(value['wsname'])
+
+                part_size = len(asset_pairs) // 3
+                remainder = len(asset_pairs) % 3
+                end1 = part_size + (1 if remainder > 0 else 0)
+                end2 = end1 + part_size + (1 if remainder > 1 else 0)
+
+                first_third = asset_pairs[:end1]
+                second_third = asset_pairs[end1:end2]
+                third_third = asset_pairs[end2:]
+                return [asset_pairs, first_third, second_third, third_third]
+        except requests.RequestException as e:
+            print(f"Failed to retrieve kraken pairs: {e}")
             return []

@@ -2,7 +2,7 @@ import websockets
 import asyncio
 import requests
 import json
-from src.utils.coinbase_pair_formatter import coinbase_pair_format
+from src.utils.pair_formatter import coinbase_pair_format
 from src.data_collectors.asset_pairs import AssetPairs
 from colorama import init, Fore, Back, Style
 
