@@ -33,7 +33,7 @@ class Coinbase(AssetPairs):
 
                     # Send the subscription message
                     await websocket.send(json.dumps(subscribe_message))
-                    print("Subscribed to ticker updates for Coinbase.")
+                    print(Fore.BLUE + f"Subscribed to ticker updates for Coinbase: connection {stream_index}")
                     self.connected = True
 
                     # Listen for incoming ticker messages

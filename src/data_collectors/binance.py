@@ -26,6 +26,7 @@ class Binance(AssetPairs):
             try:
                 async with websockets.connect(f"{ws_url}{concat_trade_name(self.pairs[stream_index])}") as websocket:
                     self.connected = True
+                    print(Fore.YELLOW + f"Subscribed to ticker updates for Binance: connection {stream_index}")
                     while True:
                         message = await websocket.recv()
                         data = json.loads(message)

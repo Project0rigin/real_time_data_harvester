@@ -33,7 +33,7 @@ class Kraken(AssetPairs):
 
                     # Send the subscription message
                     await websocket.send(json.dumps(subscribe_message))
-                    print("Subscribed to ticker updates for Kraken.")
+                    print(Fore.GREEN + f"Subscribed to ticker updates for Kraken: connection {stream_index}")
                     self.connected = True
 
                     # Listen for incoming ticker messages
