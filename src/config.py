@@ -163,3 +163,8 @@ UNSUPPORTED_TICKERS = [
     "POLY-USD",
     "TRU-EUR"
 ]
+
+# ----Kraken Base API settings----
+
+# Websocket
+KRAKEN_WEBSOCKET_URI = "wss://ws.kraken.com"
