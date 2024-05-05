@@ -29,7 +29,7 @@ The Real-Time Data Harvester is specifically designed to meet these critical nee
 
 ## Installation
 
-Follow these steps to set up the Market Edge Scanner:
+Follow these steps to set up the Real Time Data Harvester:
 
 1. Clone the repository:
 
@@ -61,7 +61,7 @@ For detailed information about the Setup of the Real Time Data Harvester, please
 
 ### API
 
-For detailed information about the API usage of the Market Edge Scanner, please refer to the [API Documentation](./docs/api.md)
+For detailed information about the API usage of the Real Time Data Harvester, please refer to the [API Documentation](./docs/api.md)
 
 ### Running the Scanner
 
@@ -78,7 +78,7 @@ For detailed information about the architectural design and the components of th
 
 ## Security
 
-For detailed information about the Security of the Market Edge Scanner, please refer to the [Security Documentation](./docs/security.md)
+For detailed information about the Security of the Real Time Data Harvester, please refer to the [Security Documentation](./docs/security.md)
 
 ## Contributing
 
