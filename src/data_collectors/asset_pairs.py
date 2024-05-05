@@ -6,6 +6,7 @@ class AssetPairs:
     def __init__(self):
         self.pairs = self._get_pairs()
         self.coinbase_pairs = self._get_pairs_coinbase()
+        #todo add kraken
 
     def shared_pairs_binance_coinbase(self):
         set_binance_pairs = set(self.pairs[0])
