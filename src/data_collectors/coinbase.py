@@ -40,7 +40,7 @@ class Coinbase(AssetPairs):
                     while True:
                         message = await websocket.recv()
                         data = json.loads(message)
-                        print(Fore.BLUE + "Coinbase Market:", message)
+                        # print(Fore.BLUE + "Coinbase Market:", message)
                         if 'product_id' in data:
                             asset_pair = data['product_id'].replace('-', '').lower()
                             price = data['price']

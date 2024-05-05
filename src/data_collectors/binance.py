@@ -29,7 +29,7 @@ class Binance(AssetPairs):
                     while True:
                         message = await websocket.recv()
                         data = json.loads(message)
-                        print(Fore.YELLOW + "Binance Market:", message)
+                        # print(Fore.YELLOW + "Binance Market:", message)
                         if 'stream' in data:
                             asset_pair = data['stream'].split('@')[0]
                             price = data['data']['p'] if 'p' in data['data'] else None
