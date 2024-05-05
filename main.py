@@ -36,6 +36,10 @@ async def get_latest_trades():
                 "prices": coinbase.last_message,
                 "shared_binance": coinbase.shared_with_binance
                 },
+            "kraken": {
+                "connected": kraken.connected,
+                "prices": kraken.last_message,
+                }
             }
     else:
         return {"error": "No data available"}

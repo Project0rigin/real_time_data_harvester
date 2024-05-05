@@ -15,7 +15,7 @@ class Kraken(AssetPairs):
         self.api_key = api_key
         self.api_secret = api_secret
         self.coin_pairs = ["XBT/USD"] #todo change to kraken
-        self.last_message = {pair: {'buy': None, 'sell': None} for pair in self.coin_pairs} #todo change to kraken
+        self.last_message = {"XBT/USD": {'buy': None, 'sell': None}} #todo change to kraken
         self.connected = False
 
     async def listen_for_trades(self, ws_url, stream_index):
@@ -41,18 +41,20 @@ class Kraken(AssetPairs):
                     while True:
                         message = await websocket.recv()
                         data = json.loads(message)
-                        print(Fore.GREEN + "Kraken Market:", message)
                         if 'trade' in data:
+                            print(Fore.GREEN + "Kraken Market:", message)
                             asset_pair = data[-1]
-                            price = data[1][0]
-                            side = data[1][3]
-                            if asset_pair in self.last_message:
-                                if side == 'b':
-                                    self.last_message[asset_pair]['buy'] = price
-                                elif side == 's':
-                                    self.last_message[asset_pair]['sell'] = price
-                            else:
-                                print(f"Received message for unknown asset pair: {asset_pair}")
+                            trades = data[1]
+                            for trade in trades:
+                                price = trade[0]
+                                side = trade[3]
+                                if asset_pair in self.last_message:
+                                    if side == 'b':
+                                        self.last_message[asset_pair]['buy'] = price
+                                    elif side == 's':
+                                        self.last_message[asset_pair]['sell'] = price
+                                else:
+                                    print(f"Received message for unknown asset pair: {asset_pair}")
 
             except websockets.exceptions.ConnectionClosed:
                 self.connected = False
