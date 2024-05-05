@@ -24,12 +24,16 @@ coinbase = Coinbase(base_url, binance_api_key, binance_api_secret)
 async def get_latest_trades():
     if binance.last_message:
         return {
-            "connected": binance.connected and coinbase.connected,
-            "binance": {"prices": binance.last_message,
-                        "shared_coinbase": binance.shared_with_coinbase
-                        },
-            "coinbase": {"prices": coinbase.last_message,
-                        "shared_binance": coinbase.shared_with_binance},
+            "binance": {
+                "connected": binance.connected,
+                "prices": binance.last_message,
+                "shared_coinbase": binance.shared_with_coinbase
+                },
+            "coinbase": {
+                "connected": coinbase.connected,
+                "prices": coinbase.last_message,
+                "shared_binance": coinbase.shared_with_binance
+                },
             }
     else:
         return {"error": "No data available"}
