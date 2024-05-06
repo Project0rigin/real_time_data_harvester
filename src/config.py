@@ -1,5 +1,5 @@
 # General settings
-WANTED_TICKERS = [x.lower() for x in ["BTC-USD", "ETH-USD", "LTC-USD", "ANKR-USD", "XRP-USD"]]
+WANTED_TICKERS = [x.lower() for x in ["BTCUSDT", "ETHUSD", "LTCUSD", "ANKRUSD", "XRPUSD"]]
 # ----Binance Base API settings----
 BASE_URL = "https://api.binance.com"
 
