@@ -1,5 +1,7 @@
+from .data_readers.asset_pairs import read_asset_pairs
 # General settings
-WANTED_TICKERS = [x.lower() for x in ["BTCUSDT", "ETHUSD", "LTCUSD", "ANKRUSD", "XRPUSD"]]
+WANTED_TICKERS = [x.lower() for x in read_asset_pairs()]
+
 # ----Binance Base API settings----
 BASE_URL = "https://api.binance.com"
 
