@@ -41,7 +41,7 @@ class Kraken(AssetPairs):
                         message = await websocket.recv()
                         data = json.loads(message)
                         if 'trade' in data:
-                            # print(Fore.GREEN + "Kraken Market:", message)
+                            print(Fore.GREEN + "Kraken Market:", message)
                             asset_pair = data[-1].replace('/', '').lower()
                             trades = data[1]
                             for trade in trades:
