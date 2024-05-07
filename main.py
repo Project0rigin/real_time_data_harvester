@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from src.data_collectors.binance import Binance
 from src.data_collectors.coinbase import Coinbase
 from src.data_collectors.kraken import Kraken
+from src.data_collectors.huobi import Huobi
 from src.config import BINANCE_WEBSOCKET_URI, COINBASE_WEBSOCKET_URI, COINS, SYMBOL_PRICE_TICKER_URL_ENDPOINT__MARKETDATA, BASE_URL, EXCHANGE_INFO_URL, KRAKEN_WEBSOCKET_URI
 from dotenv import load_dotenv
 import os
@@ -21,6 +22,7 @@ base_url = BASE_URL
 binance = Binance(base_url, binance_api_key, binance_api_secret)
 coinbase = Coinbase(base_url, binance_api_key, binance_api_secret)
 kraken = Kraken(base_url, binance_api_key, binance_api_secret)
+huobi = Huobi(base_url, binance_api_key, binance_api_secret)
 
 @app.get("/latest_trades")
 async def get_latest_trades():
@@ -65,11 +67,16 @@ async def start_coinbase_listener():
         tasks.append(task)
     return asyncio.gather(*tasks)
 
+async def start_huobi_listener():
+    task = asyncio.create_task(huobi.listen_for_trades("wss://api.huobi.pro/ws", 1))
+    return task
+
 @app.on_event("startup")
 async def startup_event():
-    asyncio.create_task(start_binance_listener())
-    asyncio.create_task(start_coinbase_listener())
-    asyncio.create_task(start_kraken_listener())
+    # asyncio.create_task(start_binance_listener())
+    # asyncio.create_task(start_coinbase_listener())
+    # asyncio.create_task(start_kraken_listener())
+    asyncio.create_task(start_huobi_listener())
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

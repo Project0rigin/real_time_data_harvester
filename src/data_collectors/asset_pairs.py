@@ -1,6 +1,7 @@
 import requests
-from src.config import EXCHANGE_INFO_URL, COINBASE_PRODUCTS_URL_ENDPOINT, KRAKEN_PRODUCTS_URL_ENDPOINT
+from src.config import EXCHANGE_INFO_URL, COINBASE_PRODUCTS_URL_ENDPOINT, KRAKEN_PRODUCTS_URL_ENDPOINT, WANTED_TICKERS
 from src.utils.pair_formatter import remove_tickers, coinbase_pair_format
+from src.utils.pair_filter import filter_pairs
 
 class AssetPairs:
     def __init__(self):
@@ -21,7 +22,9 @@ class AssetPairs:
             data = response.json()
             asset_pairs = []
             for symbol_data in data["symbols"]:
-                asset_pairs.append(symbol_data["symbol"].lower())
+                formatted_pair = symbol_data["symbol"].lower()
+                if formatted_pair in WANTED_TICKERS:
+                    asset_pairs.append(symbol_data["symbol"].lower())
             part_size = len(asset_pairs) // 3
             remainder = len(asset_pairs) % 3
             end1 = part_size + (1 if remainder > 0 else 0)
@@ -41,7 +44,10 @@ class AssetPairs:
             products = response.json()
             unfiltered_asset_pairs = []
             for product in products:
-                unfiltered_asset_pairs.append(product['id'])
+                formatted_pair = product['id'].replace('-', '').lower()
+                if formatted_pair in WANTED_TICKERS:
+                    unfiltered_asset_pairs.append(product['id'])
+
             filtered_asset_pairs = remove_tickers(unfiltered_asset_pairs)
             part_size = len(filtered_asset_pairs) // 3
             remainder = len(filtered_asset_pairs) % 3
@@ -65,7 +71,9 @@ class AssetPairs:
             if not data['error']:
                 products = data['result']
                 for key, value in products.items():
-                    asset_pairs.append(value['wsname'])
+                    unfiltered_pair = value['wsname'].replace('/', '').lower()
+                    if unfiltered_pair in WANTED_TICKERS:
+                        asset_pairs.append(value['wsname'])
 
                 part_size = len(asset_pairs) // 3
                 remainder = len(asset_pairs) % 3
