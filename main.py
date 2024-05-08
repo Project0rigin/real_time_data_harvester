@@ -73,9 +73,9 @@ async def start_huobi_listener():
 
 @app.on_event("startup")
 async def startup_event():
-    # asyncio.create_task(start_binance_listener())
-    # asyncio.create_task(start_coinbase_listener())
-    # asyncio.create_task(start_kraken_listener())
+    asyncio.create_task(start_binance_listener())
+    asyncio.create_task(start_coinbase_listener())
+    asyncio.create_task(start_kraken_listener())
     asyncio.create_task(start_huobi_listener())
 
 if __name__ == "__main__":
