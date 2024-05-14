@@ -2,7 +2,7 @@
 
 ## Description
 
-This repository is dedicated to a powerful market scanning tool designed to identify arbitrage opportunities across multiple exchanges. By analyzing real-time price data, the scanner effectively pinpoints discrepancies and potential profit points in the market.
+This repository is dedicated to a powerful market scanning tool designed to identify arbitrage opportunities across multiple exchanges. By analyzing real-time price data, the Data collector effectively pinpoints discrepancies and potential profit points in the market.
 
 ## Table of Contents
 
@@ -13,7 +13,7 @@ This repository is dedicated to a powerful market scanning tool designed to iden
   - [Configuration](#configuration)
   - [Setup](#setup)
   - [API](#api)
-  - [Running the Scanner](#running-the-scanner)
+  - [Running the Data collector](#running-the-Data collector)
 - [Architecture](#architecture)
 - [Security](#security)
 - [Contributing](#contributing)
@@ -63,12 +63,11 @@ For detailed information about the Setup of the Real Time Data Harvester, please
 
 For detailed information about the API usage of the Real Time Data Harvester, please refer to the [API Documentation](./docs/api.md)
 
-### Running the Scanner
+### Running the Data collector
 
-To start the scanner, run the following command from the root of the project:
+To start the Data collector and activate the API, run the following command from the root of the project:
 
 ```bash
-python main.py
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
