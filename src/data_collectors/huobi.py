@@ -45,17 +45,8 @@ class Huobi(AssetPairs):
                                 'pong': data['ping']
                             }
                             await websocket.send(json.dumps(pong))
-                        # if 'product_id' in data:
-                        #     asset_pair = data['product_id'].replace('-', '').lower()
-                        #     price = data['price']
-                        #     side = data.get('side', None)
-                        #     if asset_pair in self.last_message:
-                        #         if side == 'buy':
-                        #             self.last_message[asset_pair]['buy'] = price
-                        #         elif side == 'sell':
-                        #             self.last_message[asset_pair]['sell'] = price
-                        #     else:
-                        #         print(f"Received message for unknown asset pair: {asset_pair}")
+                        elif 'ch' in data:
+                            asset_pair = data['ch'].split('.')[1]
 
             except websockets.exceptions.ConnectionClosed:
                 self.connected = False
